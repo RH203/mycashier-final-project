@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ConnectDatabase {
-  static final String DB_URL = "jdbc:mysql://localhost:3306/kasir-pbo";
+  static final String DB_URL = "jdbc:mysql://localhost:3306/mycashier-pbo-final";
   static final String USER = "root"; // Isi dengan username database
   static final String PASS = "Raihanfirdaus20."; // Password MySQL jika ada
 
@@ -39,10 +39,34 @@ public class ConnectDatabase {
         }
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      System.out.println("(Display Menu) Error: " + e.getMessage());
     }
 
     // Convert ArrayList to an array
     return menuList.toArray(new Menu[0]);
   }
+
+  public Menu getMenuById(int idMenu) {
+    Menu menu = null;
+
+    try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
+      String query = "SELECT id_menu, nama_menu, harga, Kategori FROM menu WHERE id_menu = ?";
+      try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        stmt.setInt(1, idMenu);
+        try (ResultSet resultSet = stmt.executeQuery()) {
+          if (resultSet.next()) {
+            String name = resultSet.getString("nama_menu");
+            int price = resultSet.getInt("harga");
+
+            menu = new Menu(name, price);
+          }
+        }
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      System.out.println("(Button Menu) Error: " + e.getMessage());
+    }
+    return menu;
+  }
+
 }
