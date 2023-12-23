@@ -1,79 +1,82 @@
 package tubes.pbo.maven.classes;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import tubes.pbo.maven.gui.CashierPage;
+
+import javax.swing.JTextArea;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CartSection {
-  private int itemCount;
-  private JLabel itemCountLabel;
 
-  public void placeComponents(JFrame frame) {
-    JPanel cartPanel = createCartPanel();
+  private JTextArea cartTextArea;
+  private List<CartItem> cartItems;
 
-    frame.add(cartPanel, BorderLayout.NORTH);
+  public CartSection(JTextArea cartTextArea, CashierPage cashierPage) {
+    this.cartTextArea = cartTextArea;
+    this.cartItems = new ArrayList<>();
   }
 
-  private JPanel createCartPanel() {
-    JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
-    itemCountLabel = new JLabel("Jumlah Item: 0");
-
-    JButton incrementButton = new JButton("Increment");
-    JButton decrementButton = new JButton("Decrement");
-    JButton confirmButton = new JButton("Konfirmasi");
-
-    incrementButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        incrementItemCount();
-      }
-    });
-
-    decrementButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        decrementItemCount();
-      }
-    });
-
-    confirmButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        confirmCart();
-      }
-    });
-
-    panel.add(incrementButton);
-    panel.add(decrementButton);
-    panel.add(confirmButton);
-    panel.add(itemCountLabel);
-
-    return panel;
+  // Add a new item to the cart
+  public void addItem(String menuName, double menuPrice, int quantity) {
+    CartItem newItem = new CartItem(menuName, menuPrice, quantity);
+    cartItems.add(newItem);
+    updateCartTextArea();
   }
 
-  public void addToCart(int menuId) {
-    itemCount += menuId;
-    updateItemCountLabel();
-  }
-
-  private void incrementItemCount() {
-    itemCount++;
-    updateItemCountLabel();
-  }
-
-  private void decrementItemCount() {
-    if (itemCount > 0) {
-      itemCount--;
-      updateItemCountLabel();
+  // Remove an item from the cart
+  public void removeItem(int index) {
+    if (index >= 0 && index < cartItems.size()) {
+      cartItems.remove(index);
+      updateCartTextArea();
     }
   }
 
-  private void confirmCart() {
-    System.out.println("Keranjang dikonfirmasi dengan " + itemCount + " item.");
+  // Update cartTextArea with the new menu information
+  private void updateCartTextArea() {
+    StringBuilder cartText = new StringBuilder("CART:\n");
+    for (CartItem item : cartItems) {
+      // Access CartItem fields directly
+      String itemName = item.getName();
+      double itemPrice = item.getPrice();
+      int itemQuantity = item.getQuantity();
+
+      // Use these fields as needed
+      cartText.append(itemName).append(" x ").append(itemQuantity)
+              .append(": $").append(itemPrice * itemQuantity).append("\n");
+    }
+    cartTextArea.setText(cartText.toString());
   }
 
-  private void updateItemCountLabel() {
-    itemCountLabel.setText("Jumlah Item: " + itemCount);
+  public List<CartItem> getCartItems() {
+    return cartItems;
+  }
+
+  // Accessor method to get the list of CartItems
+  List<CartItem> getItemList() {
+    return cartItems;
+  }
+
+  public static class CartItem {
+    private String name;
+    private double price;
+    private int quantity;
+
+    public CartItem(String name, double price, int quantity) {
+      this.name = name;
+      this.price = price;
+      this.quantity = quantity;
+    }
+
+    public String getName() {
+      return name;
+    }
+
+    public double getPrice() {
+      return price;
+    }
+
+    public int getQuantity() {
+      return quantity;
+    }
   }
 }
