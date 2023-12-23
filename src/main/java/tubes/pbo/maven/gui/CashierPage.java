@@ -4,12 +4,16 @@
  */
 package tubes.pbo.maven.gui;
 
+// Import class
 import tubes.pbo.maven.classes.DisplayMenuSection;
+import tubes.pbo.maven.classes.ButtonMenuSection;
 import tubes.pbo.maven.database.ConnectDatabase;
+
+import java.awt.event.ActionEvent;
 
 /**
  *
- * @author Raihan
+ * @author katana
  */
 public class CashierPage extends javax.swing.JFrame {
 
@@ -18,12 +22,14 @@ public class CashierPage extends javax.swing.JFrame {
    */
 
   private DisplayMenuSection displayMenuSection;
+  private ConnectDatabase connectDatabase;
+  private ButtonMenuSection buttonMenuSection;
+
   public CashierPage() {
     initComponents();
-    // Display menu
-    ConnectDatabase connectDatabase = new ConnectDatabase();
+    // Display Menu
+    connectDatabase = new ConnectDatabase();
     displayMenuSection = new DisplayMenuSection(connectDatabase);
-
     displayMenuSection.displayMenu(jTable1);
 
   }
@@ -44,6 +50,7 @@ public class CashierPage extends javax.swing.JFrame {
     jTextField1 = new javax.swing.JTextField();
     jButton2 = new javax.swing.JButton();
     jTextField6 = new javax.swing.JTextField();
+    jTextField4 = new javax.swing.JTextField();
     jPanel4 = new javax.swing.JPanel();
     jTextField2 = new javax.swing.JTextField();
     jButton3 = new javax.swing.JButton();
@@ -91,44 +98,56 @@ public class CashierPage extends javax.swing.JFrame {
                             .addContainerGap(31, Short.MAX_VALUE))
     );
 
+    // Button Submit Menu
+
     jTextField1.setText("Menu:");
-    jTextField1.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jTextField1ActionPerformed(evt);
-      }
-    });
 
-    jButton2.setText("Submit");
     jButton2.addActionListener(new java.awt.event.ActionListener() {
+      @Override
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jButton2ActionPerformed(evt);
+        int selectedMenuId = getSelectedMenuId();
+        buttonMenuSection.handleMenuSubmit(selectedMenuId);
       }
     });
 
-//    jTextField6.setText("jTextField6");
+  private void getSelectedMenuId () {
+
+    }
+//    jButton2.addActionListener(new java.awt.event.ActionListener() {
+//      public void actionPerformed(java.awt.event.ActionEvent evt) {
+//        jButton2ActionPerformed(evt);
+//      }
+//    });
+
+    jTextField6.setText("ID MENU");
+
+    jTextField4.setText("JUMLAH");
+
+    // Button Submit Menu
 
     javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
     jPanel3.setLayout(jPanel3Layout);
     jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGap(17, 17, 17)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap())
+                            .addGap(18, 18, 18)
+                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap(39, Short.MAX_VALUE))
                     .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
     jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGap(7, 7, 7)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                            .addGap(3, 3, 3)
-                                            .addComponent(jTextField6)))
-                            .addGap(18, 18, 18)
+                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(17, 17, 17)
                             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE))
     );
 
@@ -236,15 +255,15 @@ public class CashierPage extends javax.swing.JFrame {
     );
 
     jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null},
-                    {null, null, null, null}
-            },
-            new String [] {
-                    "Title 1", "Title 2", "Title 3", "Title 4"
-            }
+//            new Object [][] {
+//                    {null, null, null, null},
+//                    {null, null, null, null},
+//                    {null, null, null, null},
+//                    {null, null, null, null}
+//            },
+//            new String [] {
+//                    "Title 1", "Title 2", "Title 3", "Title 4"
+//            }
     ));
     jScrollPane1.setViewportView(jTable1);
 
@@ -333,13 +352,13 @@ public class CashierPage extends javax.swing.JFrame {
 //        }
 //      }
 //    } catch (ClassNotFoundException ex) {
-//      java.util.logging.Logger.getLogger(CashierPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//      java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //    } catch (InstantiationException ex) {
-//      java.util.logging.Logger.getLogger(CashierPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//      java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //    } catch (IllegalAccessException ex) {
-//      java.util.logging.Logger.getLogger(CashierPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//      java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//      java.util.logging.Logger.getLogger(CashierPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//      java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //    }
 //    //</editor-fold>
 //
@@ -371,6 +390,7 @@ public class CashierPage extends javax.swing.JFrame {
   private javax.swing.JTextField jTextField1;
   private javax.swing.JTextField jTextField2;
   private javax.swing.JTextField jTextField3;
+  private javax.swing.JTextField jTextField4;
   private javax.swing.JTextField jTextField5;
   private javax.swing.JTextField jTextField6;
   // End of variables declaration
