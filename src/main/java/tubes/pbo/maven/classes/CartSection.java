@@ -47,9 +47,9 @@ public class CartSection {
     cartTextArea.setText(cartText.toString());
   }
 
-  public List<CartItem> getCartItems() {
-    return cartItems;
-  }
+//  public List<CartItem> getCartItems() {
+//    return cartItems;
+//  }
 
   // Accessor method to get the list of CartItems
   List<CartItem> getItemList() {

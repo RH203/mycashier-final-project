@@ -10,6 +10,8 @@ import tubes.pbo.maven.classes.ButtonMenuSection;
 import tubes.pbo.maven.classes.CartSection;
 import tubes.pbo.maven.database.ConnectDatabase;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 /**
@@ -55,7 +57,7 @@ public class CashierPage extends javax.swing.JFrame {
     jButton1 = new javax.swing.JButton();
     jPanel3 = new javax.swing.JPanel();
     titleMenu = new javax.swing.JTextField();
-    jButton2 = new javax.swing.JButton();
+    btnSubmitMenu = new javax.swing.JButton();
     idMenuTextArea = new javax.swing.JTextField();
     jumlahMenuTextArea = new javax.swing.JTextField();
     jPanel4 = new javax.swing.JPanel();
@@ -67,8 +69,8 @@ public class CashierPage extends javax.swing.JFrame {
     jScrollPane2 = new javax.swing.JScrollPane();
     cartTextArea = new javax.swing.JTextArea();
     jPanel6 = new javax.swing.JPanel();
-    jButton4 = new javax.swing.JButton();
-    jButton5 = new javax.swing.JButton();
+    btnAddMenu = new javax.swing.JButton();
+    btnDeleteMenu = new javax.swing.JButton();
     jButton6 = new javax.swing.JButton();
     jScrollPane1 = new javax.swing.JScrollPane();
     jTable1 = new javax.swing.JTable();
@@ -108,24 +110,14 @@ public class CashierPage extends javax.swing.JFrame {
     // Button Submit Menu
 
     titleMenu.setText("Menu:");
-    jButton2.setText("Submit Menu");
-    jButton2.addActionListener(new java.awt.event.ActionListener() {
+    btnSubmitMenu.setText("Submit Menu");
+    btnSubmitMenu.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        try {
-          String idMenuString = idMenuTextArea.getText();
-          String jumlahMenuString = jumlahMenuTextArea.getText();
-
-          int idMenu = Integer.parseInt(idMenuString);
-          int jumlahMenu = Integer.parseInt(jumlahMenuString);
-          buttonMenuSection.handleMenuSubmit(idMenu, jumlahMenu);
-        } catch (NumberFormatException e) {
-          // Handle the exception, for example, display an error message
-          System.err.println("Invalid menu ID: " + e.getMessage());
-        }
+        btnSubmitMenuActionPerformed(evt);
       }
     });
 
-//    jButton2.addActionListener(new java.awt.event.ActionListener() {
+//    btnSubmitMenu.addActionListener(new java.awt.event.ActionListener() {
 //      @Override
 //      public void actionPerformed(java.awt.event.ActionEvent evt) {
 //
@@ -137,9 +129,9 @@ public class CashierPage extends javax.swing.JFrame {
 //  private void getSelectedMenuId () {
 //
 //    }
-//    jButton2.addActionListener(new java.awt.event.ActionListener() {
+//    btnSubmitMenu.addActionListener(new java.awt.event.ActionListener() {
 //      public void actionPerformed(java.awt.event.ActionEvent evt) {
-//        jButton2ActionPerformed(evt);
+//        btnSubmitMenuActionPerformed(evt);
 //      }
 //    });
 
@@ -161,7 +153,7 @@ public class CashierPage extends javax.swing.JFrame {
                             .addGap(18, 18, 18)
                             .addComponent(jumlahMenuTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addContainerGap(39, Short.MAX_VALUE))
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSubmitMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
     jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,15 +164,15 @@ public class CashierPage extends javax.swing.JFrame {
                                     .addComponent(titleMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jumlahMenuTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(17, 17, 17)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE))
+                            .addComponent(btnSubmitMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE))
     );
 
     jTextField2.setText("Update Harga:");
-    jTextField2.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jTextField2ActionPerformed(evt);
-      }
-    });
+//    jTextField2.addActionListener(new java.awt.event.ActionListener() {
+//      public void actionPerformed(java.awt.event.ActionEvent evt) {
+//        jTextField2ActionPerformed(evt);
+//      }
+//    });
 
     jButton3.setText("Update");
 
@@ -241,15 +233,27 @@ public class CashierPage extends javax.swing.JFrame {
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addContainerGap(15, Short.MAX_VALUE))
     );
+// Button Tambah  & Delete Menu:
+// Button Tambah  & Delete Menu:
+    btnAddMenu.setText("Tambah menu");
 
-    jButton4.setText("Tambah menu");
-
-    jButton5.setText("Hapus Menu");
-    jButton5.addActionListener(new java.awt.event.ActionListener() {
+    btnDeleteMenu.setText("Hapus Menu");
+    btnDeleteMenu.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jButton5ActionPerformed(evt);
+        btnDeleteMenuActionPerformed(evt);
       }
     });
+
+    btnAddMenu.addActionListener(new java.awt.event.ActionListener() {
+      @Override
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btnAddMenuActionPerformed(evt);
+      }
+    });
+
+
+
+    // Button Tambah  & Delete Menu:
 
     jButton6.setText("Konfirmasi");
 
@@ -262,9 +266,9 @@ public class CashierPage extends javax.swing.JFrame {
                             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(jPanel6Layout.createSequentialGroup()
-                                            .addComponent(jButton4)
+                                            .addComponent(btnAddMenu)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                                            .addComponent(jButton5)))
+                                            .addComponent(btnDeleteMenu)))
                             .addContainerGap())
     );
     jPanel6Layout.setVerticalGroup(
@@ -272,8 +276,8 @@ public class CashierPage extends javax.swing.JFrame {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                             .addContainerGap()
                             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnAddMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnDeleteMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(18, 18, 18)
                             .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                             .addContainerGap())
@@ -340,15 +344,17 @@ public class CashierPage extends javax.swing.JFrame {
     pack();
   }// </editor-fold>
 
+
+
   private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {
     // TODO add your handling code here:
   }
 
-  public void titleMenu(String text) {
-    cartTextArea.setText(text);
-  }
+//  public void titleMenu(String text) {
+//    cartTextArea.setText(text);
+//  }
 
-  private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+  private void btnSubmitMenuActionPerformed(java.awt.event.ActionEvent evt) {
     // TODO add your handling code here:
     try {
       String idMenuString = idMenuTextArea.getText();
@@ -356,20 +362,38 @@ public class CashierPage extends javax.swing.JFrame {
 
       int idMenu = Integer.parseInt(idMenuString);
       int jumlahMenu = Integer.parseInt(jumlahMenuString);
-
-      // Pass jumlahMenu to handleMenuSubmit
       buttonMenuSection.handleMenuSubmit(idMenu, jumlahMenu);
     } catch (NumberFormatException e) {
-      System.err.println("Invalid menu ID or jumlah: " + e.getMessage());
+      // Handle the exception, for example, display an error message
+      System.err.println("Invalid menu ID: " + e.getMessage());
+      JOptionPane.showMessageDialog(null, "Menu ID atau quantity yang dimasukan harus angka!.");
     }
   }
 
-  private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {
+//  private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {
+//    // TODO add your handling code here:
+//  }
+
+  private void btnDeleteMenuActionPerformed(java.awt.event.ActionEvent evt) {
     // TODO add your handling code here:
+//    ButtonMenuSection.handleDeleteMenu();
+
   }
 
-  private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {
+  private void btnAddMenuActionPerformed(java.awt.event.ActionEvent evt) {
     // TODO add your handling code here:
+    try{
+      String idMenuString = idMenuTextArea.getText();
+      String jumlahMenuString = jumlahMenuTextArea.getText();
+
+      int idMenu = Integer.parseInt(idMenuString);
+      int jumlahMenu = Integer.parseInt(jumlahMenuString);
+
+      buttonMenuSection.handleAddMenu(idMenu, jumlahMenu);
+    } catch (NumberFormatException e) {
+      System.out.println("Invalid (menu ID or jumlah) (btnDelete): " + e.getMessage());
+      JOptionPane.showMessageDialog(null, "Invalid number (btnAddMenu)");
+    }
   }
   public void setCartTextArea(String text) {
     cartTextArea.setText(text);
@@ -412,10 +436,10 @@ public class CashierPage extends javax.swing.JFrame {
 
   // Variables declaration - do not modify
   private javax.swing.JButton jButton1;
-  private javax.swing.JButton jButton2;
+  private javax.swing.JButton btnSubmitMenu;
   private javax.swing.JButton jButton3;
-  private javax.swing.JButton jButton4;
-  private javax.swing.JButton jButton5;
+  private javax.swing.JButton btnAddMenu;
+  private javax.swing.JButton btnDeleteMenu;
   private javax.swing.JButton jButton6;
   private javax.swing.JComboBox<String> jComboBox1;
   private javax.swing.JPanel jPanel1;
