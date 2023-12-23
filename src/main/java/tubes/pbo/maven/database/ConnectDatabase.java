@@ -46,9 +46,8 @@ public class ConnectDatabase {
     return menuList.toArray(new Menu[0]);
   }
 
-  public Menu getMenuById(int idMenu) {
+  public Menu getMenuById(int idMenu) throws SQLException {
     Menu menu = null;
-
     try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
       String query = "SELECT id_menu, nama_menu, harga, Kategori FROM menu WHERE id_menu = ?";
       try (PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -57,16 +56,19 @@ public class ConnectDatabase {
           if (resultSet.next()) {
             String name = resultSet.getString("nama_menu");
             int price = resultSet.getInt("harga");
-
-            menu = new Menu(name, price);
+            int id = resultSet.getInt("id_menu");
+            String cateegory = resultSet.getString("Kategori");
+            menu = new Menu(id, name, price, cateegory);
           }
         }
       }
     } catch (SQLException e) {
       e.printStackTrace();
-      System.out.println("(Button Menu) Error: " + e.getMessage());
+      System.out.println("Error getting menu by ID: " + e.getMessage());
+      throw e;
     }
     return menu;
   }
+
 
 }

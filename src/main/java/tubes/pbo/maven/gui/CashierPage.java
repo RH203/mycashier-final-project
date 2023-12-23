@@ -7,6 +7,7 @@ package tubes.pbo.maven.gui;
 // Import class
 import tubes.pbo.maven.classes.DisplayMenuSection;
 import tubes.pbo.maven.classes.ButtonMenuSection;
+import tubes.pbo.maven.classes.CartSection;
 import tubes.pbo.maven.database.ConnectDatabase;
 
 import java.awt.event.ActionEvent;
@@ -24,13 +25,19 @@ public class CashierPage extends javax.swing.JFrame {
   private DisplayMenuSection displayMenuSection;
   private ConnectDatabase connectDatabase;
   private ButtonMenuSection buttonMenuSection;
+  private CartSection cartSection;
 
   public CashierPage() {
     initComponents();
     // Display Menu
+    // Display Menu
     connectDatabase = new ConnectDatabase();
     displayMenuSection = new DisplayMenuSection(connectDatabase);
     displayMenuSection.displayMenu(jTable1);
+
+    // Cart
+    cartSection = new CartSection(cartTextArea, this);
+    buttonMenuSection = new ButtonMenuSection(this, cartSection);
 
   }
 
@@ -47,10 +54,10 @@ public class CashierPage extends javax.swing.JFrame {
     jComboBox1 = new javax.swing.JComboBox<>();
     jButton1 = new javax.swing.JButton();
     jPanel3 = new javax.swing.JPanel();
-    jTextField1 = new javax.swing.JTextField();
+    titleMenu = new javax.swing.JTextField();
     jButton2 = new javax.swing.JButton();
-    jTextField6 = new javax.swing.JTextField();
-    jTextField4 = new javax.swing.JTextField();
+    idMenuTextArea = new javax.swing.JTextField();
+    jumlahMenuTextArea = new javax.swing.JTextField();
     jPanel4 = new javax.swing.JPanel();
     jTextField2 = new javax.swing.JTextField();
     jButton3 = new javax.swing.JButton();
@@ -58,7 +65,7 @@ public class CashierPage extends javax.swing.JFrame {
     jPanel5 = new javax.swing.JPanel();
     jTextField3 = new javax.swing.JTextField();
     jScrollPane2 = new javax.swing.JScrollPane();
-    jTextArea1 = new javax.swing.JTextArea();
+    cartTextArea = new javax.swing.JTextArea();
     jPanel6 = new javax.swing.JPanel();
     jButton4 = new javax.swing.JButton();
     jButton5 = new javax.swing.JButton();
@@ -100,28 +107,45 @@ public class CashierPage extends javax.swing.JFrame {
 
     // Button Submit Menu
 
-    jTextField1.setText("Menu:");
-
+    titleMenu.setText("Menu:");
+    jButton2.setText("Submit Menu");
     jButton2.addActionListener(new java.awt.event.ActionListener() {
-      @Override
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        int selectedMenuId = getSelectedMenuId();
-        buttonMenuSection.handleMenuSubmit(selectedMenuId);
+        try {
+          String idMenuString = idMenuTextArea.getText();
+          String jumlahMenuString = jumlahMenuTextArea.getText();
+
+          int idMenu = Integer.parseInt(idMenuString);
+          int jumlahMenu = Integer.parseInt(jumlahMenuString);
+          buttonMenuSection.handleMenuSubmit(idMenu, jumlahMenu);
+        } catch (NumberFormatException e) {
+          // Handle the exception, for example, display an error message
+          System.err.println("Invalid menu ID: " + e.getMessage());
+        }
       }
     });
 
-  private void getSelectedMenuId () {
-
-    }
+//    jButton2.addActionListener(new java.awt.event.ActionListener() {
+//      @Override
+//      public void actionPerformed(java.awt.event.ActionEvent evt) {
+//
+//        int selectedMenuId = connectDatabase.getMenuById();
+//        buttonMenuSection.handleMenuSubmit(selectedMenuId);
+//      }
+//    });
+//
+//  private void getSelectedMenuId () {
+//
+//    }
 //    jButton2.addActionListener(new java.awt.event.ActionListener() {
 //      public void actionPerformed(java.awt.event.ActionEvent evt) {
 //        jButton2ActionPerformed(evt);
 //      }
 //    });
 
-    jTextField6.setText("ID MENU");
+    idMenuTextArea.setText("ID MENU");
 
-    jTextField4.setText("JUMLAH");
+    jumlahMenuTextArea.setText("JUMLAH");
 
     // Button Submit Menu
 
@@ -131,11 +155,11 @@ public class CashierPage extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                             .addGap(17, 17, 17)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(titleMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(idMenuTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jumlahMenuTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addContainerGap(39, Short.MAX_VALUE))
                     .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
@@ -144,9 +168,9 @@ public class CashierPage extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                             .addGap(7, 7, 7)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(idMenuTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(titleMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jumlahMenuTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(17, 17, 17)
                             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE))
     );
@@ -189,10 +213,11 @@ public class CashierPage extends javax.swing.JFrame {
     );
 
     jTextField3.setText("CART");
-
-    jTextArea1.setColumns(20);
-    jTextArea1.setRows(5);
-    jScrollPane2.setViewportView(jTextArea1);
+//    cartTextArea.setText("Test");
+    cartTextArea.setColumns(20);
+    cartTextArea.setRows(5);
+    jScrollPane2.setViewportView(cartTextArea);
+// Cart text Area
 
     javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
     jPanel5.setLayout(jPanel5Layout);
@@ -319,12 +344,24 @@ public class CashierPage extends javax.swing.JFrame {
     // TODO add your handling code here:
   }
 
-  private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {
-    // TODO add your handling code here:
+  public void titleMenu(String text) {
+    cartTextArea.setText(text);
   }
 
   private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
     // TODO add your handling code here:
+    try {
+      String idMenuString = idMenuTextArea.getText();
+      String jumlahMenuString = jumlahMenuTextArea.getText();
+
+      int idMenu = Integer.parseInt(idMenuString);
+      int jumlahMenu = Integer.parseInt(jumlahMenuString);
+
+      // Pass jumlahMenu to handleMenuSubmit
+      buttonMenuSection.handleMenuSubmit(idMenu, jumlahMenu);
+    } catch (NumberFormatException e) {
+      System.err.println("Invalid menu ID or jumlah: " + e.getMessage());
+    }
   }
 
   private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -333,6 +370,9 @@ public class CashierPage extends javax.swing.JFrame {
 
   private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {
     // TODO add your handling code here:
+  }
+  public void setCartTextArea(String text) {
+    cartTextArea.setText(text);
   }
 
 //  /**
@@ -386,12 +426,12 @@ public class CashierPage extends javax.swing.JFrame {
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JScrollPane jScrollPane2;
   private javax.swing.JTable jTable1;
-  private javax.swing.JTextArea jTextArea1;
-  private javax.swing.JTextField jTextField1;
+  private javax.swing.JTextArea cartTextArea;
+  private javax.swing.JTextField titleMenu;
   private javax.swing.JTextField jTextField2;
   private javax.swing.JTextField jTextField3;
-  private javax.swing.JTextField jTextField4;
+  private javax.swing.JTextField jumlahMenuTextArea;
   private javax.swing.JTextField jTextField5;
-  private javax.swing.JTextField jTextField6;
+  private javax.swing.JTextField idMenuTextArea;
   // End of variables declaration
 }
