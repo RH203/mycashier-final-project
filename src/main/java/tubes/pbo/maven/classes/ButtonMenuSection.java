@@ -53,6 +53,15 @@ public class ButtonMenuSection {
   }
 
   public void handleAddMenu (int menuId, int jumlahMenu) {
+    JFrame frame = new JFrame("Update Makanan.");
+    frame.setSize(300, 300);
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    JPanel panel = new JPanel();
+    frame.add(panel);
+
+    frame.setVisible(true);
+
 
   }
   public void handleDeleteMenu () {

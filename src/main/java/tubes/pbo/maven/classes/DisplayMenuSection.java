@@ -18,7 +18,7 @@ public class DisplayMenuSection {
     // Connect to the database and retrieve menu data
     Menu[] menuItems = connectDatabase.getMenuData();
 
-    // Convert menu data to a format suitable for display (e.g., Object[][])
+    // Convert menu data to a format suitable for display
     Object[][] tableData = convertToTableData(menuItems);
 
     // Set the data in the table
@@ -26,7 +26,7 @@ public class DisplayMenuSection {
   }
 
   private Object[][] convertToTableData(Menu[] menuItems) {
-    Object[][] data = new Object[menuItems.length][4]; // Assuming 2 columns (name and price)
+    Object[][] data = new Object[menuItems.length][4]; 
 
     for (int i = 0; i < menuItems.length; i++) {
       data[i][0] = menuItems[i].getId();

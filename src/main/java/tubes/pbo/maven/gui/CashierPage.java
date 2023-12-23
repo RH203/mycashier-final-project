@@ -350,9 +350,9 @@ public class CashierPage extends javax.swing.JFrame {
     // TODO add your handling code here:
   }
 
-  public void titleMenu(String text) {
-    cartTextArea.setText(text);
-  }
+//  public void titleMenu(String text) {
+//    cartTextArea.setText(text);
+//  }
 
   private void btnSubmitMenuActionPerformed(java.awt.event.ActionEvent evt) {
     // TODO add your handling code here:
