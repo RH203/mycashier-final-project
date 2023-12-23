@@ -2,11 +2,7 @@ package tubes.pbo.maven.database;
 
 import tubes.pbo.maven.classes.Menu;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class ConnectDatabase {
@@ -69,6 +65,20 @@ public class ConnectDatabase {
     }
     return menu;
   }
+
+  public void sendGetMenuById (int menuId, int jumlahMenu) {
+    try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
+      String call = "call tambah_detail_pesanan(?, ?)";
+      try (CallableStatement stmt = connection.prepareCall(call)) {
+        stmt.setInt(1, menuId);
+        stmt.setInt(2, jumlahMenu);
+        stmt.executeUpdate();
+      }
+    } catch (SQLException e) {
+      System.out.println("(Error sendGetMenuById)" + e.getMessage());
+    }
+  }
+
 
 
 }
