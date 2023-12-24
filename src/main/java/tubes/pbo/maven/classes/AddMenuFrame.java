@@ -44,31 +44,26 @@ public class AddMenuFrame extends JFrame {
   private void addButtonActionPerformed(ActionEvent evt) {
     try {
       int idMenu = Integer.parseInt(idMenuField.getText());
-      int quantity = Integer.parseInt(jumlahMenuField.getText());
+      int newQuantity = Integer.parseInt(jumlahMenuField.getText());
+      boolean foundIdMenu = false;
 
-      for (int i = 0; i < cartSection.getCartItems().size(); i++ ) {
-        if (idMenu != cartSection.getCartItems().get(i).getIdMenu() || cartSection.getCartItems().isEmpty()) {
-          JOptionPane.showMessageDialog(null, "ID menu tidak terdapat pada cart.");
-          System.out.println("Loop check addButtonAction");
+      for (int i = 0; i < cartSection.getCartItems().size(); i++) {
+        if(idMenu == cartSection.getCartItems().get(i).getIdMenu()) {
+          int tempNewQuantity = newQuantity + cartSection.getCartItems().get(i).getQuantity();
+          cartSection.getCartItems().get(i).setQuantity(tempNewQuantity);
+          foundIdMenu = true;
           break;
         }
       }
 
-      for (int i = 0; i < cartSection.getCartItems().size(); i++) {
-        if (idMenu == cartSection.getCartItems().get(i).getIdMenu()) {
-          cartSection.addItem(
-                  cartSection.getCartItems().get(i).getIdMenu(),
-                  cartSection.getCartItems().get(i).getName(),
-                  cartSection.getCartItems().get(i).getPrice(),
-                  cartSection.getCartItems().get(i).getQuantity()
-                  );
-        }
-        cartSection.updateCartTextArea();
-        System.out.println("Loop check addButtonAction update");
-        break;
+      if (!foundIdMenu) {
+        JOptionPane.showMessageDialog(null, "ID menu tidak terdapat dikeranjang.");
       }
+      dispose();
+      cartSection.updateCartTextArea();
     } catch (NumberFormatException e) {
       JOptionPane.showMessageDialog(null, "ID menu atau quantity harus berupa angka!");
+      System.out.println("Error function addButtonActionPerformed (AddMenuFrame) " + e.getMessage());
     }
   }
 }

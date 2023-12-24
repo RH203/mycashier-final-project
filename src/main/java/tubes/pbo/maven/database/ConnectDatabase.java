@@ -79,6 +79,56 @@ public class ConnectDatabase {
     }
   }
 
+  public int sendTotalHarga() {
+    int totalHarga = 0;
+    try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
+      String call = "call proses_pembayaran()";
+      try (CallableStatement stmt = connection.prepareCall(call)) {
+        stmt.executeUpdate();
 
+        // Retrieve the total harga after the update
+        String query = "SELECT total_pembayaran FROM pembayaran ORDER BY id_pembayaran DESC LIMIT 1";
+        try (PreparedStatement stmtGetTotalHarga = connection.prepareStatement(query);
+             ResultSet resultSet = stmtGetTotalHarga.executeQuery()) {
+          if (resultSet.next()) {
+            totalHarga = resultSet.getInt("total_pembayaran");
+          }
+        }
+      }
+    } catch (SQLException e) {
+      System.out.println("(Error sendTotalHarga)" + e.getMessage());
+    }
+    return totalHarga;
+  }
+
+
+  public int getLastTotalHarga() {
+    int lastTotalHarga = 0;
+    try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
+      // Get the maximum id_pembayaran
+      String getMaxIdQuery = "SELECT MAX(id_pembayaran) AS max_id FROM pembayaran";
+      try (PreparedStatement getMaxIdStmt = connection.prepareStatement(getMaxIdQuery);
+           ResultSet maxIdResultSet = getMaxIdStmt.executeQuery()) {
+
+        if (maxIdResultSet.next()) {
+          int maxId = maxIdResultSet.getInt("max_id");
+
+          // Retrieve total_pembayaran for the maximum id_pembayaran
+          String getTotalHargaQuery = "SELECT total_pembayaran FROM pembayaran WHERE id_pembayaran = ?";
+          try (PreparedStatement getTotalHargaStmt = connection.prepareStatement(getTotalHargaQuery)) {
+            getTotalHargaStmt.setInt(1, maxId);
+            try (ResultSet totalHargaResultSet = getTotalHargaStmt.executeQuery()) {
+              if (totalHargaResultSet.next()) {
+                lastTotalHarga = totalHargaResultSet.getInt("total_pembayaran");
+              }
+            }
+          }
+        }
+      }
+    } catch (SQLException e) {
+      System.out.println("(Error getLastTotalHarga) " + e.getMessage());
+    }
+    return lastTotalHarga;
+  }
 
 }

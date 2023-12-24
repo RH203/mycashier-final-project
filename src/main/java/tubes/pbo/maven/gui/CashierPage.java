@@ -5,15 +5,10 @@
 package tubes.pbo.maven.gui;
 
 // Import class
-import tubes.pbo.maven.classes.AddMenuFrame;
-import tubes.pbo.maven.classes.DisplayMenuSection;
-import tubes.pbo.maven.classes.ButtonMenuSection;
-import tubes.pbo.maven.classes.CartSection;
+import tubes.pbo.maven.classes.*;
 import tubes.pbo.maven.database.ConnectDatabase;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
 
 /**
  *
@@ -29,6 +24,7 @@ public class CashierPage extends javax.swing.JFrame {
   private ConnectDatabase connectDatabase;
   private ButtonMenuSection buttonMenuSection;
   private CartSection cartSection;
+  private KonfirmasiMenuFrame totalHargaFrame;
 
   public CashierPage() {
     initComponents();
@@ -42,6 +38,7 @@ public class CashierPage extends javax.swing.JFrame {
     cartSection = new CartSection(cartTextArea, this);
     buttonMenuSection = new ButtonMenuSection(this, cartSection);
 
+    totalHargaFrame = new KonfirmasiMenuFrame(this);
   }
 
   /**
@@ -72,7 +69,7 @@ public class CashierPage extends javax.swing.JFrame {
     jPanel6 = new javax.swing.JPanel();
     btnAddMenu = new javax.swing.JButton();
     btnDeleteMenu = new javax.swing.JButton();
-    jButton6 = new javax.swing.JButton();
+    btnKonfirmasi = new javax.swing.JButton();
     jScrollPane1 = new javax.swing.JScrollPane();
     jTable1 = new javax.swing.JTable();
 
@@ -256,7 +253,11 @@ public class CashierPage extends javax.swing.JFrame {
 
     // Button Tambah  & Delete Menu:
 
-    jButton6.setText("Konfirmasi");
+    btnKonfirmasi.setText("Konfirmasi");
+    btnKonfirmasi.addActionListener(new java.awt.event.ActionListener() {
+      @Override
+      public void actionPerformed(java.awt.event.ActionEvent evt) { btnKonfirmasi(); }
+    });
 
     javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
     jPanel6.setLayout(jPanel6Layout);
@@ -265,7 +266,7 @@ public class CashierPage extends javax.swing.JFrame {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                             .addContainerGap()
                             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnKonfirmasi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(jPanel6Layout.createSequentialGroup()
                                             .addComponent(btnAddMenu)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
@@ -280,7 +281,7 @@ public class CashierPage extends javax.swing.JFrame {
                                     .addComponent(btnAddMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnDeleteMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(18, 18, 18)
-                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                            .addComponent(btnKonfirmasi, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                             .addContainerGap())
     );
 
@@ -377,7 +378,9 @@ public class CashierPage extends javax.swing.JFrame {
 
   private void btnDeleteMenuActionPerformed(java.awt.event.ActionEvent evt) {
     // TODO add your handling code here:
-//    ButtonMenuSection.handleDeleteMenu();
+    RemoveMenuFrame removeMenuFrame = new RemoveMenuFrame(this, cartSection);
+    removeMenuFrame.setLocationRelativeTo(this);
+    removeMenuFrame.setVisible(true);
 
   }
 
@@ -386,6 +389,17 @@ public class CashierPage extends javax.swing.JFrame {
     AddMenuFrame addMenuFrame = new AddMenuFrame(this, cartSection);
     addMenuFrame.setLocationRelativeTo(this);
     addMenuFrame.setVisible(true);
+  }
+  private void btnKonfirmasi () {
+    // TODO add your handling code here:
+    int idPembayaran = connectDatabase.getLastTotalHarga();
+
+    // Set total harga pada totalHargaFrame
+    totalHargaFrame.setTotalHarga(idPembayaran);
+
+    // Tampilkan totalHargaFrame
+    totalHargaFrame.setLocationRelativeTo(this);
+    totalHargaFrame.setVisible(true);
   }
   public void setCartTextArea(String text) {
     cartTextArea.setText(text);
@@ -432,7 +446,7 @@ public class CashierPage extends javax.swing.JFrame {
   private javax.swing.JButton jButton3;
   private javax.swing.JButton btnAddMenu;
   private javax.swing.JButton btnDeleteMenu;
-  private javax.swing.JButton jButton6;
+  private javax.swing.JButton btnKonfirmasi;
   private javax.swing.JComboBox<String> jComboBox1;
   private javax.swing.JPanel jPanel1;
   private javax.swing.JPanel jPanel3;
