@@ -13,7 +13,6 @@ public class DisplayMenuSection {
     this.connectDatabase = connectDatabase;
   }
 
-  // This function displays the menu in the specified table
   public void displayMenu(JTable table) {
     // Connect to the database and retrieve menu data
     Menu[] menuItems = connectDatabase.getMenuData();
