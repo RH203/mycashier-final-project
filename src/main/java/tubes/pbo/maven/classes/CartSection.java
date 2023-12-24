@@ -24,9 +24,9 @@ public class CartSection {
   }
 
   // Remove an item from the cart
-  public void removeItem(int index) {
-    if (index >= 0 && index < cartItems.size()) {
-      cartItems.remove(index);
+  public void removeItem(int idMenu) {
+    if (idMenu >= 0 && idMenu < cartItems.size()) {
+      cartItems.remove(idMenu);
       updateCartTextArea();
     }
   }
@@ -83,5 +83,8 @@ public class CartSection {
       return quantity;
     }
     public int getIdMenu ()  { return idMenu; }
+    public void setQuantity (int newQuantity) {
+      this.quantity = newQuantity;
+    }
   }
 }
