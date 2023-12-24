@@ -4,15 +4,15 @@ public class Menu {
   private int id;
   private String name;
   private int price;
-  private String description;
+  private String category;
 
   // Constructors, getters, and setters
 
-  public Menu(int id, String name, int price, String description) {
+  public Menu(int id, String name, int price, String category) {
     this.id = id;
     this.name = name;
     this.price = price;
-    this.description = description;
+    this.category = category;
   }
 
   public int getId() {
@@ -27,7 +27,7 @@ public class Menu {
     return price;
   }
 
-  public String getDescription() {
-    return description;
+  public String getCategory() {
+    return category;
   }
 }

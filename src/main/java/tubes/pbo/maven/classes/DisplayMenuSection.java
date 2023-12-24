@@ -26,13 +26,13 @@ public class DisplayMenuSection {
   }
 
   private Object[][] convertToTableData(Menu[] menuItems) {
-    Object[][] data = new Object[menuItems.length][4]; 
+    Object[][] data = new Object[menuItems.length][4];
 
     for (int i = 0; i < menuItems.length; i++) {
       data[i][0] = menuItems[i].getId();
       data[i][1] = menuItems[i].getName();
       data[i][2] = menuItems[i].getPrice();
-      data[i][3] = menuItems[i].getDescription();
+      data[i][3] = menuItems[i].getCategory();
 
     }
 

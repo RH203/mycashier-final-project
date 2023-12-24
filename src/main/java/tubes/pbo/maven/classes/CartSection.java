@@ -9,7 +9,7 @@ import java.util.List;
 public class CartSection {
 
   private JTextArea cartTextArea;
-  private List<CartItem> cartItems;
+  private List<CartItem> cartItems; // Semua input disimpan disini
 
   public CartSection(JTextArea cartTextArea, CashierPage cashierPage) {
     this.cartTextArea = cartTextArea;
@@ -17,8 +17,8 @@ public class CartSection {
   }
 
   // Add a new item to the cart
-  public void addItem(String menuName, double menuPrice, int quantity) {
-    CartItem newItem = new CartItem(menuName, menuPrice, quantity);
+  public void addItem(int idMenu, String menuName, double menuPrice, int quantity) {
+    CartItem newItem = new CartItem(menuName, menuPrice, quantity, idMenu);
     cartItems.add(newItem);
     updateCartTextArea();
   }
@@ -32,24 +32,26 @@ public class CartSection {
   }
 
   // Update cartTextArea with the new menu information
-  private void updateCartTextArea() {
+  public void updateCartTextArea() {
     StringBuilder cartText = new StringBuilder("CART:\n");
     for (CartItem item : cartItems) {
       // Access CartItem fields directly
+      int itemId = item.getIdMenu();
       String itemName = item.getName();
       double itemPrice = item.getPrice();
       int itemQuantity = item.getQuantity();
 
       // Use these fields as needed
       cartText.append(itemName).append(" x ").append(itemQuantity)
-              .append(": $").append(itemPrice * itemQuantity).append("\n");
+              .append(": Rp").append(itemPrice * itemQuantity).append("\n");
+//      (DEBUG OUTPUT BUTTON MENU)
+//      System.out.println("( " + itemId + " )" + itemName + " x " + itemQuantity + ": $" + (itemPrice * itemQuantity));
     }
     cartTextArea.setText(cartText.toString());
   }
-
-//  public List<CartItem> getCartItems() {
-//    return cartItems;
-//  }
+  public List<CartItem> getCartItems() {
+    return cartItems;
+  }
 
   // Accessor method to get the list of CartItems
   List<CartItem> getItemList() {
@@ -60,11 +62,13 @@ public class CartSection {
     private String name;
     private double price;
     private int quantity;
+    private int idMenu;
 
-    public CartItem(String name, double price, int quantity) {
+    public CartItem(String name, double price, int quantity, int idMenu) {
       this.name = name;
       this.price = price;
       this.quantity = quantity;
+      this.idMenu = idMenu;
     }
 
     public String getName() {
@@ -78,5 +82,6 @@ public class CartSection {
     public int getQuantity() {
       return quantity;
     }
+    public int getIdMenu ()  { return idMenu; }
   }
 }
