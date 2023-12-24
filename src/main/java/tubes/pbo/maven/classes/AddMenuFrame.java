@@ -1,5 +1,6 @@
 package tubes.pbo.maven.classes;
 
+import tubes.pbo.maven.database.ConnectDatabase;
 import tubes.pbo.maven.gui.CashierPage;
 import tubes.pbo.maven.classes.CartSection;
 import javax.swing.*;
@@ -8,6 +9,7 @@ import java.awt.event.ActionEvent;
 public class AddMenuFrame extends JFrame {
   private CashierPage cashierPage;
   private CartSection cartSection;
+  private ConnectDatabase connectDatabase;
 
   private JPanel panel;
   private JTextField idMenuField, jumlahMenuField;
@@ -15,6 +17,7 @@ public class AddMenuFrame extends JFrame {
 
   public AddMenuFrame(CashierPage cashierPage, CartSection cartSection) {
     this.cashierPage = cashierPage;
+    this.connectDatabase = new ConnectDatabase();
     this.cartSection = cartSection;
     initComponents();
   }
@@ -59,6 +62,8 @@ public class AddMenuFrame extends JFrame {
       if (!foundIdMenu) {
         JOptionPane.showMessageDialog(null, "ID menu tidak terdapat dikeranjang.");
       }
+
+      connectDatabase.sendTambahQuanttiy(idMenu, newQuantity);
       dispose();
       cartSection.updateCartTextArea();
     } catch (NumberFormatException e) {

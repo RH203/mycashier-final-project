@@ -53,6 +53,11 @@ public class CartSection {
     return cartItems;
   }
 
+  public void clearCart () {
+    cartItems.clear();
+    updateCartTextArea();
+  }
+
   // Accessor method to get the list of CartItems
   List<CartItem> getItemList() {
     return cartItems;
