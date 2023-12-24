@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class ConnectDatabase {
   static final String DB_URL = "jdbc:mysql://localhost:3306/mycashier-pbo-final";
   static final String USER = "root"; // Isi dengan username database
-  static final String PASS = "Raihanfirdaus20."; // Password MySQL jika ada
+  static final String PASS = ""; // Password MySQL jika ada
 
   public static Connection getConnection() throws SQLException {
     return DriverManager.getConnection(DB_URL, USER, PASS);
