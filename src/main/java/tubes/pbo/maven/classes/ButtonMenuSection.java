@@ -23,9 +23,10 @@ public class ButtonMenuSection {
       connectDatabase.sendGetMenuById(menuId, jumlahMenu);
       if (menu != null) {
         // Condition cek menu
+        int idMenu = menu.getId();
         String menuName = menu.getName();
         double menuPrice = menu.getPrice();
-        cartSection.addItem(menuName, menuPrice, jumlahMenu);
+        cartSection.addItem(idMenu, menuName, menuPrice, jumlahMenu);
         updateCartTextArea();
       } else {
         // Menu not found
@@ -35,6 +36,14 @@ public class ButtonMenuSection {
     } catch (SQLException e) {
       System.out.println("(ButtonMenuSection) ERROR: " + e.getMessage());
     }
+  }
+
+  public void handleAddMenu (int menuId, int jumlahMenu) {
+
+  }
+
+  public void handleDeleteMenu () {
+
   }
 
   private void updateCartTextArea() {
@@ -51,21 +60,4 @@ public class ButtonMenuSection {
     }
     cashierPage.setCartTextArea(cartText.toString());
   }
-
-  public void handleAddMenu (int menuId, int jumlahMenu) {
-    JFrame frame = new JFrame("Update Makanan.");
-    frame.setSize(300, 300);
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    JPanel panel = new JPanel();
-    frame.add(panel);
-
-    frame.setVisible(true);
-
-
-  }
-  public void handleDeleteMenu () {
-
-  }
-
 }

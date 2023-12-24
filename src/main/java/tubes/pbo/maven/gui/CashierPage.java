@@ -5,6 +5,7 @@
 package tubes.pbo.maven.gui;
 
 // Import class
+import tubes.pbo.maven.classes.AddMenuFrame;
 import tubes.pbo.maven.classes.DisplayMenuSection;
 import tubes.pbo.maven.classes.ButtonMenuSection;
 import tubes.pbo.maven.classes.CartSection;
@@ -382,18 +383,9 @@ public class CashierPage extends javax.swing.JFrame {
 
   private void btnAddMenuActionPerformed(java.awt.event.ActionEvent evt) {
     // TODO add your handling code here:
-    try{
-      String idMenuString = idMenuTextArea.getText();
-      String jumlahMenuString = jumlahMenuTextArea.getText();
-
-      int idMenu = Integer.parseInt(idMenuString);
-      int jumlahMenu = Integer.parseInt(jumlahMenuString);
-
-      buttonMenuSection.handleAddMenu(idMenu, jumlahMenu);
-    } catch (NumberFormatException e) {
-      System.out.println("Invalid (menu ID or jumlah) (btnDelete): " + e.getMessage());
-      JOptionPane.showMessageDialog(null, "Invalid number (btnAddMenu)");
-    }
+    AddMenuFrame addMenuFrame = new AddMenuFrame(this, cartSection);
+    addMenuFrame.setLocationRelativeTo(this);
+    addMenuFrame.setVisible(true);
   }
   public void setCartTextArea(String text) {
     cartTextArea.setText(text);
