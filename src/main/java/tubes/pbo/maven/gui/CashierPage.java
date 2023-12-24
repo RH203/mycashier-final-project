@@ -347,7 +347,9 @@ public class CashierPage extends javax.swing.JFrame {
   }// </editor-fold>
 
 
-
+  public JTextArea getCartTextArea() {
+    return cartTextArea;
+  }
   private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {
     // TODO add your handling code here:
   }

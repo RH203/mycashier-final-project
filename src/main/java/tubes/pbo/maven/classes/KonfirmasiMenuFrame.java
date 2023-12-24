@@ -2,6 +2,7 @@ package tubes.pbo.maven.classes;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import tubes.pbo.maven.classes.CartSection;
 import tubes.pbo.maven.database.ConnectDatabase;
 import tubes.pbo.maven.gui.CashierPage;
 
@@ -11,11 +12,13 @@ public class KonfirmasiMenuFrame extends JFrame {
   private JTextField uangTextField;
   private JButton konfirmasiButton;
   private JLabel nilaiTotalHargaLabel;
+  private CartSection cartSection;
 
   private int totalHarga;
 
   public KonfirmasiMenuFrame(CashierPage cashierPage) {
     connectDatabase = new ConnectDatabase();
+    cartSection = new CartSection(cashierPage.getCartTextArea(), cashierPage);
     initComponents();
   }
 
@@ -64,6 +67,7 @@ public class KonfirmasiMenuFrame extends JFrame {
 
       JOptionPane.showMessageDialog(this, "Kembalian: Rp " + kembalian);
       dispose();
+      cartSection.clearCart();
     } catch (NumberFormatException ex) {
       JOptionPane.showMessageDialog(this, "Masukkan jumlah uang dengan benar.", "Error", JOptionPane.ERROR_MESSAGE);
     }

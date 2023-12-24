@@ -2,12 +2,14 @@ package tubes.pbo.maven.classes;
 
 import tubes.pbo.maven.gui.CashierPage;
 import tubes.pbo.maven.classes.CartSection;
+import tubes.pbo.maven.database.ConnectDatabase;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 
 public class RemoveMenuFrame extends JFrame {
   private CashierPage cashierPage;
+  private ConnectDatabase connectDatabase;
   private CartSection cartSection;
   private JPanel panel;
   private JTextField idMenuFieldRemove, quantityFieldRemove;
@@ -15,6 +17,7 @@ public class RemoveMenuFrame extends JFrame {
 
   public RemoveMenuFrame (CashierPage cashierPage, CartSection cartSection) {
     this.cashierPage = cashierPage;
+    this.connectDatabase = new ConnectDatabase();
     this.cartSection = cartSection;
     initComponents();
   }
@@ -72,6 +75,7 @@ public class RemoveMenuFrame extends JFrame {
 //        System.out.println("Condition found: gajalan?"); Debug kondisi tidak muncul
       }
 
+      connectDatabase.sendKurangiQuanttiy(idMenu, quantity);
       dispose();
 //      cartSection.updateCartTextArea();
     } catch (NumberFormatException e) {

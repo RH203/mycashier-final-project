@@ -72,10 +72,42 @@ public class ConnectDatabase {
       try (CallableStatement stmt = connection.prepareCall(call)) {
         stmt.setInt(1, menuId);
         stmt.setInt(2, jumlahMenu);
+
+        System.out.println("Sebelum dirun");
         stmt.executeUpdate();
+        System.out.println("Sesudah dirun");
       }
     } catch (SQLException e) {
       System.out.println("(Error sendGetMenuById)" + e.getMessage());
+      e.printStackTrace();
+    }
+  }
+  public void sendTambahQuanttiy (int menuId, int jumlahMenu) {
+    try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
+      String call = "call tambahQuantity_detail_pesanan(?,?)";
+      try (CallableStatement stmt = connection.prepareCall(call)) {
+        stmt.setInt(1, menuId);
+        stmt.setInt(2, jumlahMenu);
+
+        System.out.println("Sebelum dirun");
+        stmt.executeUpdate();
+        System.out.println("Sesudah dirun");
+      }
+    } catch (SQLException e) {
+      System.out.println("(Error sendTambahQuantity)" + e.getMessage());
+      e.printStackTrace();
+    }
+  }
+  public void sendKurangiQuanttiy (int menuId, int jumlahMenu) {
+    try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
+      String call = "call kurangi_detail_pesanan(?,?)";
+      try (CallableStatement stmt = connection.prepareCall(call)) {
+        stmt.setInt(1, menuId);
+        stmt.setInt(2, jumlahMenu);
+        stmt.executeUpdate();
+      }
+    } catch (SQLException e) {
+      System.out.println("(Error sendTambahQuantity)" + e.getMessage());
     }
   }
 
