@@ -3,10 +3,13 @@ package tubes.pbo.maven.classes;
 import tubes.pbo.maven.database.ConnectDatabase;
 import tubes.pbo.maven.gui.CashierPage;
 import tubes.pbo.maven.classes.CartSection;
+import tubes.pbo.maven.classes.Update;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 
 public class AddMenuFrame extends JFrame {
+
   private CashierPage cashierPage;
   private CartSection cartSection;
   private ConnectDatabase connectDatabase;
@@ -48,6 +51,16 @@ public class AddMenuFrame extends JFrame {
     try {
       int idMenu = Integer.parseInt(idMenuField.getText());
       int newQuantity = Integer.parseInt(jumlahMenuField.getText());
+
+
+      Update update = new Update();
+      try {
+        update.updatePrice(connectDatabase.getConnection(), String.valueOf(idMenu), newQuantity);
+      } catch (SQLException e) {
+        System.out.println("Error saat mengupdate harga: " + e.getMessage());
+
+      }
+
       boolean foundIdMenu = false;
 
       for (int i = 0; i < cartSection.getCartItems().size(); i++) {
@@ -63,7 +76,6 @@ public class AddMenuFrame extends JFrame {
         JOptionPane.showMessageDialog(null, "ID menu tidak terdapat dikeranjang.");
       }
 
-      connectDatabase.sendTambahQuanttiy(idMenu, newQuantity);
       dispose();
       cartSection.updateCartTextArea();
     } catch (NumberFormatException e) {
