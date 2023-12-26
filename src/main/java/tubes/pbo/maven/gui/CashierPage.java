@@ -107,7 +107,7 @@ public class CashierPage extends javax.swing.JFrame {
 
     // Button Submit Menu
 
-    titleMenu.setText("Menu:");
+    menuLabel.setText("Menu:");
     btnSubmitMenu.setText("Submit Menu");
     btnSubmitMenu.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,26 +115,7 @@ public class CashierPage extends javax.swing.JFrame {
       }
     });
 
-//    btnSubmitMenu.addActionListener(new java.awt.event.ActionListener() {
-//      @Override
-//      public void actionPerformed(java.awt.event.ActionEvent evt) {
-//
-//        int selectedMenuId = connectDatabase.getMenuById();
-//        buttonMenuSection.handleMenuSubmit(selectedMenuId);
-//      }
-//    });
-//
-//  private void getSelectedMenuId () {
-//
-//    }
-//    btnSubmitMenu.addActionListener(new java.awt.event.ActionListener() {
-//      public void actionPerformed(java.awt.event.ActionEvent evt) {
-//        btnSubmitMenuActionPerformed(evt);
-//      }
-//    });
-
     idMenuTextArea.setText("ID MENU");
-
     jumlahMenuTextArea.setText("JUMLAH");
 
     // Button Submit Menu
@@ -145,7 +126,7 @@ public class CashierPage extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                             .addGap(17, 17, 17)
-                            .addComponent(titleMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(menuLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(idMenuTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
@@ -159,19 +140,20 @@ public class CashierPage extends javax.swing.JFrame {
                             .addGap(7, 7, 7)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(idMenuTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(titleMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(menuLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jumlahMenuTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(17, 17, 17)
                             .addComponent(btnSubmitMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE))
     );
 
-    jTextField2.setText("Update Harga:");
 //    jTextField2.addActionListener(new java.awt.event.ActionListener() {
 //      public void actionPerformed(java.awt.event.ActionEvent evt) {
 //        jTextField2ActionPerformed(evt);
 //      }
 //    });
 
+    jLabel.setText("Update");
+    jTextField2.setText("Update Harga:");
     jButton3.setText("Update");
 
     javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -180,29 +162,32 @@ public class CashierPage extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                             .addContainerGap()
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel4Layout.createSequentialGroup()
+                                            .addComponent(jLabel)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(18, 18, 18)
-                                            .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)))
-                            .addContainerGap(14, Short.MAX_VALUE))
+                                            .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
+                                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addContainerGap())
     );
     jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                             .addContainerGap()
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel)
                                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel4Layout.createSequentialGroup()
-                                            .addGap(4, 4, 4)
-                                            .addComponent(jTextField5)))
+                                    .addComponent(jTextField5))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
                             .addContainerGap())
     );
 
-    jTextField3.setText("CART");
+
+      jLabel1.setText("CART");
+//    jTextField3.setText("CART");
 //    cartTextArea.setText("Test");
     cartTextArea.setColumns(20);
     cartTextArea.setRows(5);
@@ -214,10 +199,12 @@ public class CashierPage extends javax.swing.JFrame {
     jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addComponent(jLabel1)
                             .addGap(64, 64, 64)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addComponent(jLabel1)
                             .addContainerGap()
                             .addComponent(jScrollPane2)
                             .addContainerGap())
@@ -225,8 +212,9 @@ public class CashierPage extends javax.swing.JFrame {
     jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addComponent(jLabel1)
                             .addGap(8, 8, 8)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addContainerGap(15, Short.MAX_VALUE))
@@ -465,5 +453,9 @@ public class CashierPage extends javax.swing.JFrame {
   private javax.swing.JTextField jumlahMenuTextArea;
   private javax.swing.JTextField jTextField5;
   private javax.swing.JTextField idMenuTextArea;
+  private javax.swing.JLabel jLabel = new javax.swing.JLabel();
+  private javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
+  private javax.swing.JLabel menuLabel = new javax.swing.JLabel();
+
   // End of variables declaration
 }
