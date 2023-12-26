@@ -14,7 +14,6 @@ public class ConnectDatabase {
     return DriverManager.getConnection(DB_URL, USER, PASS);
   }
 
-  // Get all data from database (DisplayMenuSection)
   public Menu[] getMenuData() {
     ArrayList<Menu> menuList = new ArrayList<>();
 
@@ -29,7 +28,6 @@ public class ConnectDatabase {
           int price = resultSet.getInt("harga");
           String category = resultSet.getString("Kategori");
 
-          // Create Menu object and add to the list
           Menu menu = new Menu(id, name, price, category);
           menuList.add(menu);
         }
@@ -38,7 +36,6 @@ public class ConnectDatabase {
       System.out.println("(Display Menu) Error: " + e.getMessage());
     }
 
-    // Convert ArrayList to an array
     return menuList.toArray(new Menu[0]);
   }
 
@@ -66,7 +63,7 @@ public class ConnectDatabase {
     return menu;
   }
 
-  public void sendGetMenuById (int menuId, int jumlahMenu) {
+  public void sendGetMenuById(int menuId, int jumlahMenu) {
     try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
       String call = "call tambah_detail_pesanan(?, ?)";
       try (CallableStatement stmt = connection.prepareCall(call)) {
@@ -82,7 +79,8 @@ public class ConnectDatabase {
       e.printStackTrace();
     }
   }
-  public void sendTambahQuanttiy (int menuId, int jumlahMenu) {
+
+  public void sendTambahQuanttiy(int menuId, int jumlahMenu) {
     try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
       String call = "call tambahQuantity_detail_pesanan(?,?)";
       try (CallableStatement stmt = connection.prepareCall(call)) {
@@ -98,7 +96,8 @@ public class ConnectDatabase {
       e.printStackTrace();
     }
   }
-  public void sendKurangiQuanttiy (int menuId, int jumlahMenu) {
+
+  public void sendKurangiQuanttiy(int menuId, int jumlahMenu) {
     try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
       String call = "call kurangi_detail_pesanan(?,?)";
       try (CallableStatement stmt = connection.prepareCall(call)) {
@@ -118,7 +117,6 @@ public class ConnectDatabase {
       try (CallableStatement stmt = connection.prepareCall(call)) {
         stmt.executeUpdate();
 
-        // Retrieve the total harga after the update
         String query = "SELECT total_pembayaran FROM pembayaran ORDER BY id_pembayaran DESC LIMIT 1";
         try (PreparedStatement stmtGetTotalHarga = connection.prepareStatement(query);
              ResultSet resultSet = stmtGetTotalHarga.executeQuery()) {
@@ -133,11 +131,9 @@ public class ConnectDatabase {
     return totalHarga;
   }
 
-
   public int getLastTotalHarga() {
     int lastTotalHarga = 0;
     try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
-      // Get the maximum id_pembayaran
       String getMaxIdQuery = "SELECT MAX(id_pembayaran) AS max_id FROM pembayaran";
       try (PreparedStatement getMaxIdStmt = connection.prepareStatement(getMaxIdQuery);
            ResultSet maxIdResultSet = getMaxIdStmt.executeQuery()) {
@@ -145,7 +141,6 @@ public class ConnectDatabase {
         if (maxIdResultSet.next()) {
           int maxId = maxIdResultSet.getInt("max_id");
 
-          // Retrieve total_pembayaran for the maximum id_pembayaran
           String getTotalHargaQuery = "SELECT total_pembayaran FROM pembayaran WHERE id_pembayaran = ?";
           try (PreparedStatement getTotalHargaStmt = connection.prepareStatement(getTotalHargaQuery)) {
             getTotalHargaStmt.setInt(1, maxId);
@@ -163,4 +158,18 @@ public class ConnectDatabase {
     return lastTotalHarga;
   }
 
+  // Metode baru untuk mengupdate harga menu
+  public void updateMenuPrice(int idMenu, int newPrice) {
+    try (Connection connection = getConnection()) {
+      String query = "UPDATE menu SET harga = ? WHERE id_menu = ?";
+      try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        preparedStatement.setInt(1, newPrice);
+        preparedStatement.setInt(2, idMenu);
+        preparedStatement.executeUpdate();
+      }
+    } catch (SQLException e) {
+      System.out.println("Error updating menu price: " + e.getMessage());
+      e.printStackTrace();
+    }
+  }
 }

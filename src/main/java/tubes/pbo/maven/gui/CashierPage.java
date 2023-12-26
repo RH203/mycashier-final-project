@@ -166,6 +166,7 @@ public class CashierPage extends javax.swing.JFrame {
     );
 
     jTextField2.setText("Update Harga:");
+
 //    jTextField2.addActionListener(new java.awt.event.ActionListener() {
 //      public void actionPerformed(java.awt.event.ActionEvent evt) {
 //        jTextField2ActionPerformed(evt);
