@@ -1,13 +1,17 @@
 package tubes.pbo.maven;
 
+import tubes.pbo.maven.gui.CashierPage;
+
+import javax.swing.SwingUtilities;
 /**
- * Hello world!
+ * mycashier_pbo
  *
  */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
-    }
+public class App {
+  public static void main( String[] args ) {
+    /* Create and display the form */
+    java.awt.EventQueue.invokeLater(() -> {
+      new CashierPage().setVisible(true);
+    });
+  }
 }
