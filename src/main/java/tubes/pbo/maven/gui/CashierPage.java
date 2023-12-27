@@ -7,7 +7,7 @@ package tubes.pbo.maven.gui;
 // Import class
 import tubes.pbo.maven.classes.*;
 import tubes.pbo.maven.database.ConnectDatabase;
-
+import tubes.pbo.maven.classes.ButtonMenuSection;
 import javax.swing.*;
 
 /**
