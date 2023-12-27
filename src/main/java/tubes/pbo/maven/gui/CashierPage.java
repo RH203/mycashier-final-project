@@ -28,13 +28,11 @@ public class CashierPage extends javax.swing.JFrame {
 
   public CashierPage() {
     initComponents();
-    // Display Menu
-    // Display Menu
     connectDatabase = new ConnectDatabase();
     displayMenuSection = new DisplayMenuSection(connectDatabase);
+
     displayMenuSection.displayMenu(jTable1);
 
-    // Cart
     cartSection = new CartSection(cartTextArea, this);
     buttonMenuSection = new ButtonMenuSection(this, cartSection);
 
@@ -71,7 +69,7 @@ public class CashierPage extends javax.swing.JFrame {
     btnDeleteMenu = new javax.swing.JButton();
     btnKonfirmasi = new javax.swing.JButton();
     jScrollPane1 = new javax.swing.JScrollPane();
-    jTable1 = new javax.swing.JTable();
+    jTable1 = new javax.swing.JTable(); // var table
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -273,6 +271,7 @@ public class CashierPage extends javax.swing.JFrame {
                             .addContainerGap())
     );
 
+    // Display disini
     jTable1.setModel(new javax.swing.table.DefaultTableModel(
 //            new Object [][] {
 //                    {null, null, null, null},
@@ -283,7 +282,9 @@ public class CashierPage extends javax.swing.JFrame {
 //            new String [] {
 //                    "Title 1", "Title 2", "Title 3", "Title 4"
 //            }
+//            Nah jTable disini itu nama var buat Table GUI. Ini yang diatas aku comment nanti ada penjelasan e
     ));
+//    Untuk yang bawah ini tidak usah diubah karena default dari netbeans, kalau diubah nanti kacau GUIne
     jScrollPane1.setViewportView(jTable1);
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -333,13 +334,12 @@ public class CashierPage extends javax.swing.JFrame {
 
     pack();
   }// </editor-fold>
-
-
   public JTextArea getCartTextArea() {
     return cartTextArea;
   }
-  private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {
-    // TODO add your handling code here:
+
+  private void jComboBox1ActionPerformed (java.awt.event.ActionEvent evt){
+
   }
 
 //  public void titleMenu(String text) {
@@ -371,7 +371,6 @@ public class CashierPage extends javax.swing.JFrame {
     RemoveMenuFrame removeMenuFrame = new RemoveMenuFrame(this, cartSection);
     removeMenuFrame.setLocationRelativeTo(this);
     removeMenuFrame.setVisible(true);
-
   }
 
   private void btnAddMenuActionPerformed(java.awt.event.ActionEvent evt) {

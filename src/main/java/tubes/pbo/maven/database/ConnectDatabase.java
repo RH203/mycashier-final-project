@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class ConnectDatabase {
   static final String DB_URL = "jdbc:mysql://localhost:3306/mycashier-pbo-final";
   static final String USER = "root"; // Isi dengan username database
-  static final String PASS = ""; // Password MySQL jika ada
+  static final String PASS = "Raihanfirdaus20."; // Password MySQL jika ada
 
   public static Connection getConnection() throws SQLException {
     return DriverManager.getConnection(DB_URL, USER, PASS);
@@ -17,7 +17,6 @@ public class ConnectDatabase {
   // Get all data from database (DisplayMenuSection)
   public Menu[] getMenuData() {
     ArrayList<Menu> menuList = new ArrayList<>();
-
     try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
       String query = "SELECT * FROM menu";
       try (PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -29,7 +28,7 @@ public class ConnectDatabase {
           int price = resultSet.getInt("harga");
           String category = resultSet.getString("Kategori");
 
-          // Create Menu object and add to the list
+//           Create Menu object and add to the list,
           Menu menu = new Menu(id, name, price, category);
           menuList.add(menu);
         }
@@ -37,8 +36,7 @@ public class ConnectDatabase {
     } catch (SQLException e) {
       System.out.println("(Display Menu) Error: " + e.getMessage());
     }
-
-    // Convert ArrayList to an array
+    // Convert ArrayList to an array.
     return menuList.toArray(new Menu[0]);
   }
 
