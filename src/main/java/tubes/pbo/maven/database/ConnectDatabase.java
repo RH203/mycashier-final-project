@@ -6,9 +6,9 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class ConnectDatabase {
-  static final String DB_URL = "jdbc:mysql://localhost:3306/mycashier-pbo-final";
-  static final String USER = "root"; // Isi dengan username database
-  static final String PASS = "Raihanfirdaus20."; // Password MySQL jika ada
+  static final String DB_URL = "jdbc:mysql://localhost:3306/tubes_pbo";
+  static final String USER = "bagus"; // Isi dengan username database
+  static final String PASS = "123"; // Password MySQL jika ada
 
 
   public static Connection getConnection() throws SQLException {
