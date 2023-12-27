@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -56,7 +57,7 @@ public class CashierPage extends JFrame {
   private void initComponents() {
 
     jPanel1 = new JPanel();
-    jComboBox1 = new JComboBox<>();
+    jComboBox1 = new JComboBox<>(new String[]{"Makanan", "Minuman", "Snack"});
     jButton1 = new JButton();
     jPanel3 = new JPanel();
     titleMenu = new JTextField();
@@ -79,13 +80,13 @@ public class CashierPage extends JFrame {
     jTable1 = new JTable();
 
     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-    jComboBox1.setModel(new DefaultComboBoxModel<>(new String[] { "Menu", "Makanan", "Minuman", "Snack" }));
+    jComboBox1.setModel(new DefaultComboBoxModel<>(new String[]{"Makanan", "Minuman", "Snack"}));
     jComboBox1.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent evt) {
         jComboBox1ActionPerformed(evt);
       }
     });
+
 
     jButton1.setText("Submit");
 
@@ -237,7 +238,6 @@ public class CashierPage extends JFrame {
                             .addContainerGap(15, Short.MAX_VALUE))
     );
 // Button Tambah  & Delete Menu:
-// Button Tambah  & Delete Menu:
     btnAddMenu.setText("Tambah menu");
 
     btnDeleteMenu.setText("Hapus Menu");
@@ -255,13 +255,14 @@ public class CashierPage extends JFrame {
     });
 
 
-
     // Button Tambah  & Delete Menu:
 
     btnKonfirmasi.setText("Konfirmasi");
     btnKonfirmasi.addActionListener(new ActionListener() {
       @Override
-      public void actionPerformed(ActionEvent evt) { btnKonfirmasi(); }
+      public void actionPerformed(ActionEvent evt) {
+        btnKonfirmasi();
+      }
     });
 
     GroupLayout jPanel6Layout = new GroupLayout(jPanel6);
@@ -355,9 +356,66 @@ public class CashierPage extends JFrame {
   public JTextArea getCartTextArea() {
     return cartTextArea;
   }
+
   private void jComboBox1ActionPerformed(ActionEvent evt) {
     // TODO add your handling code here:
+    try {
+      String url = "jdbc:mysql://localhost:3306/mycashier-pbo-final";
+      String user = "root";
+      String password = "Raihanfirdaus20.";
+      Connection connection = DriverManager.getConnection(url, user, password);
+
+
+      String selectedItem = jComboBox1.getSelectedItem().toString();
+      String Menu;
+
+      if (selectedItem.equals("Makanan")) {
+        Menu = "makanan_view";
+      } else if (selectedItem.equals("Minuman")) {
+        Menu = "minuman_view";
+      } else {
+        Menu = "snack_view";
+      }
+        // Handle the default case or throw an exception
+      String query = "SELECT * FROM " + Menu;
+      Statement statement = connection.createStatement();
+      ResultSet resultSet = statement.executeQuery(query);
+      ArrayList<Menu> menuListUpdate = new ArrayList<>();
+
+      // Display data in JTextArea (assuming cartTextArea is JTextArea)
+      cartTextArea.setText(""); // Clear existing text
+      while (resultSet.next()) {
+        int idMenuView = resultSet.getInt("id_menu");
+        String judulMenuView = resultSet.getString("nama_menu");
+        int hargaMenuView = resultSet.getInt("harga");
+        Menu menuCategory = new Menu(idMenuView, judulMenuView, hargaMenuView);
+        menuListUpdate.add(menuCategory);
+      }
+//      menuListUpdate.toArray(new Menu[0]);
+      Object[][] objCategory = convertToTableCategory(menuListUpdate.toArray(new Menu[0]));
+      displayMenuSection.setTableData(jTable1, objCategory);
+
+//       cartTextArea.append(idMenuView + "\n"); // Append data to JTextArea
+      resultSet.close();
+      statement.close();
+      connection.close();
+    } catch (SQLException ex) {
+      ex.printStackTrace();
+      // Handle any SQL exceptions here
+    }
   }
+
+  private Object[][] convertToTableCategory (Menu[] menuItems) {
+    Object[][] data = new Object[menuItems.length][3];
+    for (int i = 0; i < menuItems.length; i++) {
+      data[i][0] = menuItems[i].getId();
+      data[i][1] = menuItems[i].getName();
+      data[i][2] = menuItems[i].getPrice();
+    }
+    return data;
+  }
+
+
 
 //  public void titleMenu(String text) {
 //    cartTextArea.setText(text);
@@ -379,83 +437,38 @@ public class CashierPage extends JFrame {
     }
   }
 
-private void JComboBox1ActionListener(java.awt.event.ActionEvent evt){
-        private void ActionPerformed (evt){
-
-  }
-    {
-      try {
-        String url = "jdbc:mysql://your_database_url";
-        String user = "bagus";
-        String password = "123";
-        Connection connection = DriverManager.getConnection(url, user, password);
-
-
-        String selectedItem = jComboBox1.getSelectedItem().toString();
-        String Menu = "";
-        if (selectedItem.equals("one")) {
-          Menu = "Makanan";
-        } else if (selectedItem.equals("two")) {
-          Menu = "Minuman";
-        } else if (selectedItem.equals("three")) {
-        } else {
-          Menu = "Snack";
-          // Handle the default case or throw an exception
-        }
-
-        String query = "SELECT * FROM " + Menu;
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(query);
-
-        // Display data in JTextArea (assuming cartTextArea is JTextArea)
-        cartTextArea.setText(""); // Clear existing text
-        while (resultSet.next()) {
-          String data = resultSet.getString("column_name");
-          cartTextArea.append(data + "\n"); // Append data to JTextArea
-        }
-
-        resultSet.close();
-        statement.close();
-        connection.close();
-      } catch (SQLException ex) {
-        ex.printStackTrace();
-        // Handle any SQL exceptions here
-      }
-    }
-
-  }
 //  private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {
 //    // TODO add your handling code here:
 //  }
 
-  private void btnDeleteMenuActionPerformed(ActionEvent evt) {
-    // TODO add your handling code here:
-    RemoveMenuFrame removeMenuFrame = new RemoveMenuFrame(this, cartSection);
-    removeMenuFrame.setLocationRelativeTo(this);
-    removeMenuFrame.setVisible(true);
+    private void btnDeleteMenuActionPerformed (ActionEvent evt){
+      // TODO add your handling code here:
+      RemoveMenuFrame removeMenuFrame = new RemoveMenuFrame(this, cartSection);
+      removeMenuFrame.setLocationRelativeTo(this);
+      removeMenuFrame.setVisible(true);
 
-  }
+    }
 
-  private void btnAddMenuActionPerformed(ActionEvent evt) {
-    // TODO add your handling code here:
-    AddMenuFrame addMenuFrame = new AddMenuFrame(this, cartSection);
-    addMenuFrame.setLocationRelativeTo(this);
-    addMenuFrame.setVisible(true);
-  }
-  private void btnKonfirmasi () {
-    // TODO add your handling code here:
-    int idPembayaran = connectDatabase.getLastTotalHarga();
+    private void btnAddMenuActionPerformed (ActionEvent evt){
+      // TODO add your handling code here:
+      AddMenuFrame addMenuFrame = new AddMenuFrame(this, cartSection);
+      addMenuFrame.setLocationRelativeTo(this);
+      addMenuFrame.setVisible(true);
+    }
+    private void btnKonfirmasi () {
+      // TODO add your handling code here:
+      int idPembayaran = connectDatabase.getLastTotalHarga();
 
-    // Set total harga pada totalHargaFrame
-    totalHargaFrame.setTotalHarga(idPembayaran);
+      // Set total harga pada totalHargaFrame
+      totalHargaFrame.setTotalHarga(idPembayaran);
 
-    // Tampilkan totalHargaFrame
-    totalHargaFrame.setLocationRelativeTo(this);
-    totalHargaFrame.setVisible(true);
-  }
-  public void setCartTextArea(String text) {
-    cartTextArea.setText(text);
-  }
+      // Tampilkan totalHargaFrame
+      totalHargaFrame.setLocationRelativeTo(this);
+      totalHargaFrame.setVisible(true);
+    }
+    public void setCartTextArea (String text){
+      cartTextArea.setText(text);
+    }
 
 //  /**
 //   * @param args the command line arguments
@@ -492,28 +505,29 @@ private void JComboBox1ActionListener(java.awt.event.ActionEvent evt){
 //    });
 //  }
 
-  // Variables declaration - do not modify
-  private JButton jButton1;
-  private JButton btnSubmitMenu;
-  private JButton jButton3;
-  private JButton btnAddMenu;
-  private JButton btnDeleteMenu;
-  private JButton btnKonfirmasi;
-  private JComboBox<String> jComboBox1;
-  private JPanel jPanel1;
-  private JPanel jPanel3;
-  private JPanel jPanel4;
-  private JPanel jPanel5;
-  private JPanel jPanel6;
-  private JScrollPane jScrollPane1;
-  private JScrollPane jScrollPane2;
-  private JTable jTable1;
-  private JTextArea cartTextArea;
-  private JTextField titleMenu;
-  private JTextField jTextField2;
-  private JTextField jTextField3;
-  private JTextField jumlahMenuTextArea;
-  private JTextField jTextField5;
-  private JTextField idMenuTextArea;
-  // End of variables declaration
-}
+    // Variables declaration - do not modify
+    private JButton jButton1;
+    private JButton btnSubmitMenu;
+    private JButton jButton3;
+    private JButton btnAddMenu;
+    private JButton btnDeleteMenu;
+    private JButton btnKonfirmasi;
+    private JComboBox<String> jComboBox1;
+    private JPanel jPanel1;
+    private JPanel jPanel3;
+    private JPanel jPanel4;
+    private JPanel jPanel5;
+    private JPanel jPanel6;
+    private JScrollPane jScrollPane1;
+    private JScrollPane jScrollPane2;
+    private JTable jTable1;
+    private JTextArea cartTextArea;
+    private JTextField titleMenu;
+    private JTextField jTextField2;
+    private JTextField jTextField3;
+    private JTextField jumlahMenuTextArea;
+    private JTextField jTextField5;
+    private JTextField idMenuTextArea;
+    // End of variables declaration
+  }
+
