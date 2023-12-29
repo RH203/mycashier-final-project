@@ -1,3 +1,5 @@
+package tubes.pbo.maven.classes;
+
 import tubes.pbo.maven.database.ConnectDatabase;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -7,32 +9,38 @@ public class Update extends JFrame {
     private JTextField txtProductId;
     private JTextField txtNewPrice;
     private JButton btnUpdate;
-    private ConnectDatabase databaseConnection; // Deklarasi variabel untuk ConnectDatabase
+    private ConnectDatabase databaseConnection;
 
-    public Update() {
-        // Inisialisasi koneksi database
-        databaseConnection = new ConnectDatabase();
+    public Update(JLabel jLabel, JTextField jTextField2, JTextField jTextField5, JButton jButton3, ConnectDatabase databaseConnection) {
+        // Periksa jika text field dan databaseConnection tidak null
+        if (jTextField2 == null || jTextField5 == null || databaseConnection == null) {
+            throw new IllegalArgumentException("Text fields dan databaseConnection tidak boleh null");
+        }
 
-        // Membuat dan mengatur JFrame
-        setTitle("Update Harga Produk");
-        setSize(300, 200);
-        setLayout(null);
+        // Atur teks untuk komponen jLabel
+        jLabel.setText("Update");
+        jButton3.setText("Update");
+
+        this.txtProductId = jTextField2;
+        this.txtNewPrice = jTextField5;
+        this.btnUpdate = jButton3;
+        this.databaseConnection = databaseConnection;
+
+        // Inisialisasi frame dan panel
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle(jLabel.getText());
+        setSize(400, 200);
 
-        // Membuat dan menambahkan komponen
-        txtProductId = new JTextField();
-        txtProductId.setBounds(10, 10, 150, 20);
-        add(txtProductId);
+        JPanel panel = new JPanel();
+        getContentPane().add(panel);
 
-        txtNewPrice = new JTextField();
-        txtNewPrice.setBounds(10, 40, 150, 20);
-        add(txtNewPrice);
+        // Menambahkan komponen-komponen ke panel
+        panel.add(jLabel);
+        panel.add(txtProductId);
+        panel.add(txtNewPrice);
+        panel.add(btnUpdate);
 
-        btnUpdate = new JButton("Update Harga");
-        btnUpdate.setBounds(10, 70, 150, 20);
-        add(btnUpdate);
-
-        // Tambahkan action listener ke tombol
+        // Menambahkan action listener ke tombol btnUpdate
         btnUpdate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -41,24 +49,19 @@ public class Update extends JFrame {
         });
     }
 
-    private void updatePriceAction() {
+    public void updatePriceAction() {
         try {
-            // Mengambil nilai dari text fields
-            int productId = Integer.parseInt(txtProductId.getText());
-            int newPrice = Integer.parseInt(txtNewPrice.getText()); // Konversi ke integer jika harga adalah tipe integer
+            // Parse integers from the text fields
+            int productId = Integer.parseInt(txtProductId.getText().trim());
+            int newPrice = Integer.parseInt(txtNewPrice.getText().trim());
 
             // Memanggil fungsi update harga
-            databaseConnection.updateMenuPrice(productId, newPrice); // Menggunakan metode yang benar
+            databaseConnection.updateMenuPrice(productId, newPrice);
             JOptionPane.showMessageDialog(this, "Harga berhasil diperbarui.");
         } catch (NumberFormatException nfe) {
             JOptionPane.showMessageDialog(this, "Masukkan nomor yang valid.");
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
         }
-    }
-
-    public static void main(String[] args) {
-        Update frame = new Update();
-        frame.setVisible(true);
     }
 }
