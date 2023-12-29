@@ -167,8 +167,13 @@ public class CashierPage extends javax.swing.JFrame {
     jButton3.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        // Call the updatePriceAction method from the Update class
-        Update update = new Update(jLabel, jTextField2, jTextField5, jButton3, dbConnection);
+        // Pastikan cartSection di sini mengacu pada instance CartSection yang ada
+        CartSection cartSection = CashierPage.this.cartSection;
+
+        // Buat instance Update dengan semua parameter yang diperlukan
+        Update update = new Update(jLabel, jTextField2, jTextField5, jButton3, dbConnection, cartSection);
+
+        // Panggil metode updatePriceAction
         update.updatePriceAction();
       }
     });
