@@ -174,7 +174,7 @@ public class CashierPage extends javax.swing.JFrame {
         Update update = new Update(jLabel, jTextField2, jTextField5, jButton3, dbConnection, cartSection);
 
         // Panggil metode updatePriceAction
-        update.updatePriceAction();
+        update.updatePriceAction(jTable1);
       }
     });
 

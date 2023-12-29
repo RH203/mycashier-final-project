@@ -10,7 +10,10 @@ public class Update extends JFrame {
     private JTextField txtNewPrice;
     private JButton btnUpdate;
     private ConnectDatabase databaseConnection;
-    private CartSection cartSection; // Referensi ke CartSection
+    private CartSection cartSection;
+
+
+    private DisplayMenuSection displayMenuSection;// Referensi ke CartSection
 
     // Modifikasi konstruktor untuk menerima CartSection
     public Update(JLabel jLabel, JTextField jTextField2, JTextField jTextField5, JButton jButton3, ConnectDatabase databaseConnection, CartSection cartSection) {
@@ -23,20 +26,21 @@ public class Update extends JFrame {
         this.txtNewPrice = jTextField5;
         this.btnUpdate = jButton3;
         this.databaseConnection = databaseConnection;
-        this.cartSection = cartSection; // Simpan referensi CartSection
+        this.cartSection = cartSection;
+        this.displayMenuSection = new DisplayMenuSection(databaseConnection);// Simpan referensi CartSection
 
         // Atur teks untuk komponen jLabel dan jButton
-        jLabel.setText("Update");
-        jButton3.setText("Update");
-
-        // Konfigurasi frame
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle(jLabel.getText());
-        setSize(400, 200);
-
-        // Membuat dan mengatur panel
-        JPanel panel = new JPanel();
-        getContentPane().add(panel);
+//        jLabel.setText("Update");
+//        jButton3.setText("Update");
+//
+//        // Konfigurasi frame
+//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        setTitle(jLabel.getText());
+//        setSize(400, 200);
+//
+//        // Membuat dan mengatur panel
+//        JPanel panel = new JPanel();
+//        getContentPane().add(panel);
 
         // Menambahkan komponen ke panel
        // panel.add(jLabel);
@@ -51,9 +55,9 @@ public class Update extends JFrame {
 //                updatePriceAction();
 //            }
 //        });
-//    }
+    }
 
-    public void updatePriceAction() {
+    public void updatePriceAction(JTable tableUpdate) {
         try {
             // Parse input menjadi integer
             int productId = Integer.parseInt(txtProductId.getText().trim());
@@ -63,13 +67,13 @@ public class Update extends JFrame {
             databaseConnection.updateMenuPrice(productId, newPrice);
 
             // Perbarui tampilan CartSection
-            cartSection.updateCartTextArea();
+            displayMenuSection.displayMenu(tableUpdate);
 
             JOptionPane.showMessageDialog(this, "Harga berhasil diperbarui.");
         } catch (NumberFormatException nfe) {
             JOptionPane.showMessageDialog(this, "Masukkan nomor yang valid.");
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+            System.out.println( ex.getMessage());
         }
     }
 }
