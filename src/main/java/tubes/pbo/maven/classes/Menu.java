@@ -14,6 +14,11 @@ public class Menu {
     this.price = price;
     this.category = category;
   }
+  public Menu(int id, String name, int price) {
+    this.id = id;
+    this.name = name;
+    this.price = price;
+  }
 
   public int getId() {
     return id;

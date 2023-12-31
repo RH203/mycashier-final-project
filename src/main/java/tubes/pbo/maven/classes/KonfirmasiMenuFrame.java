@@ -13,7 +13,6 @@ public class KonfirmasiMenuFrame extends JFrame {
   private JButton konfirmasiButton;
   private JLabel nilaiTotalHargaLabel;
   private CartSection cartSection;
-
   private int totalHarga;
 
   public KonfirmasiMenuFrame(CashierPage cashierPage) {
@@ -72,5 +71,4 @@ public class KonfirmasiMenuFrame extends JFrame {
       JOptionPane.showMessageDialog(this, "Masukkan jumlah uang dengan benar.", "Error", JOptionPane.ERROR_MESSAGE);
     }
   }
-
 }

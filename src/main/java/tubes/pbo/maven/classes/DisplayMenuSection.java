@@ -35,7 +35,7 @@ public class DisplayMenuSection {
     return data;
   }
 
-  private void setTableData(JTable table, Object[][] data) {
+  public void setTableData(JTable table, Object[][] data) {
     // Set the data in your table model
     DefaultTableModel model = new DefaultTableModel(data, new Object[]{"ID", "Menu", "Harga", "Kategori"});
     table.setModel(model);

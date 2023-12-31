@@ -71,9 +71,9 @@ public class ConnectDatabase {
         stmt.setInt(1, menuId);
         stmt.setInt(2, jumlahMenu);
 
-        System.out.println("Sebelum dirun");
+//        System.out.println("Sebelum dirun");
         stmt.executeUpdate();
-        System.out.println("Sesudah dirun");
+//        System.out.println("Sesudah dirun");
       }
     } catch (SQLException e) {
       System.out.println("(Error sendGetMenuById)" + e.getMessage());
@@ -161,4 +161,17 @@ public class ConnectDatabase {
     return lastTotalHarga;
   }
 
+  public void updateMenuPrice(int idMenu, int newPrice) {
+    try (Connection connection = getConnection()) {
+      String query = "UPDATE menu SET harga = ? WHERE id_menu = ?";
+      try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        preparedStatement.setInt(1, newPrice);
+        preparedStatement.setInt(2, idMenu);
+        preparedStatement.executeUpdate();
+      }
+    } catch (SQLException e) {
+      System.out.println("Error updating menu price: " + e.getMessage());
+      e.printStackTrace();
+    }
+  }
 }
