@@ -6,7 +6,7 @@ public class Menu {
   private int price;
   private String category;
 
-  // Constructors, getters, and setters
+  // Constructors, getters, and setters MENU
 
   public Menu(int id, String name, int price, String category) {
     this.id = id;

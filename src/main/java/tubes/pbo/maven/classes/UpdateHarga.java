@@ -13,11 +13,10 @@ public class UpdateHarga extends JFrame {
   private CartSection cartSection;
 
 
-  private DisplayMenuSection displayMenuSection;// Referensi ke CartSection
+  private DisplayMenuSection displayMenuSection;
 
-  // Modifikasi konstruktor untuk menerima CartSection
   public UpdateHarga(JLabel jLabel, JTextField jTextField2, JTextField jTextField5, JButton jButton3, ConnectDatabase databaseConnection, CartSection cartSection) {
-    // Periksa jika text field dan databaseConnection tidak null
+    // Periksa jika text field dan databaseConnection null
     if (jTextField2 == null || jTextField5 == null || databaseConnection == null || cartSection == null) {
       throw new IllegalArgumentException("Text fields, databaseConnection, dan cartSection tidak boleh null");
     }
@@ -27,34 +26,7 @@ public class UpdateHarga extends JFrame {
     this.btnUpdate = jButton3;
     this.databaseConnection = databaseConnection;
     this.cartSection = cartSection;
-    this.displayMenuSection = new DisplayMenuSection(databaseConnection);// Simpan referensi CartSection
 
-    // Atur teks untuk komponen jLabel dan jButton
-//        jLabel.setText("Update");
-//        jButton3.setText("Update");
-//
-//        // Konfigurasi frame
-//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        setTitle(jLabel.getText());
-//        setSize(400, 200);
-//
-//        // Membuat dan mengatur panel
-//        JPanel panel = new JPanel();
-//        getContentPane().add(panel);
-
-    // Menambahkan komponen ke panel
-    // panel.add(jLabel);
-    // panel.add(txtProductId);
-    // panel.add(txtNewPrice);
-    // panel.add(btnUpdate);
-
-    // Menambahkan action listener ke tombol btnUpdate
-//        btnUpdate.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                updatePriceAction();
-//            }
-//        });
   }
 
   public void updatePriceAction(JTable tableUpdate) {
@@ -67,7 +39,9 @@ public class UpdateHarga extends JFrame {
       databaseConnection.updateMenuPrice(productId, newPrice);
 
       // Perbarui tampilan CartSection
-      displayMenuSection.displayMenu(tableUpdate);
+//      System.out.println("Sebelum update");
+//      displayMenuSection.displayMenu(tableUpdate);
+//      System.out.println("sesudah update");
 
       JOptionPane.showMessageDialog(this, "Harga berhasil diperbarui.");
     } catch (NumberFormatException nfe) {

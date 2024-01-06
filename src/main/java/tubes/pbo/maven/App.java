@@ -4,7 +4,7 @@ import tubes.pbo.maven.gui.CashierPage;
 
 import javax.swing.SwingUtilities;
 /**
- * mycashier_pbo
+ * mycashier_pbo2
  *
  */
 public class App {
