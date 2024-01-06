@@ -168,6 +168,8 @@ public class CashierPage extends javax.swing.JFrame {
 
         // Panggil metode updatePriceAction
         update.updatePriceAction(jTable1);
+        displayMenuSection.displayMenu(jTable1);
+
       }
     });
 
@@ -378,7 +380,7 @@ public class CashierPage extends javax.swing.JFrame {
       }else if(selectedItem.equals("Minuman")) {
         Menu = "minuman_view";
       }else if (selectedItem.equals("Snack")){
-        System.out.println("Debug snack");
+//        System.out.println("Debug snack");
         Menu = "snack_view";
       }else {
         System.out.println("TIdak ada category");
@@ -390,7 +392,7 @@ public class CashierPage extends javax.swing.JFrame {
       ArrayList<Menu> menuListUpdate = new ArrayList<>();
 
       // Display data in JTextArea (assuming cartTextArea is JTextArea)
-      cartTextArea.setText(""); // Clear existing text
+//      cartTextArea.setText(""); // Clear existing text
       while (resultSet.next()) {
         int idMenuView = resultSet.getInt("id_menu");
         String judulMenuView = resultSet.getString("nama_menu");
