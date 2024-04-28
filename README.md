@@ -40,68 +40,12 @@ Program ini dibuat menggunakan Java, Swing, dan MYSQL.
 ```bash
 idea64 .
 ```
-5\. Create a /db folder and create a ConnectDatabase class. After that copy the code below. **Make sure to create a db folder inside the directory.**
 
-```bash
-login-java\src\main\java\login\java\maven
-```
-```java
-// Copy this code
-package login.java.maven.database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-public class ConnectDatabase {
-  static final String DB_URL = "jdbc:mysql://localhost:3306/login_java"; // change 3360 with your current port on Xampp
-  static final String USER = "root";
-  static final String PASS = "";
-
-  public void createUser(String userPengguna, String passPengguna) throws SQLException, ClassNotFoundException {
-    try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-         PreparedStatement stmt = conn.prepareStatement("INSERT INTO customer (user_pengguna, password_pengguna) VALUES (?, ?)")) {
-
-      stmt.setString(1, userPengguna);
-      stmt.setString(2, passPengguna);
-      stmt.executeUpdate();
-    }
-  }
-
-  public boolean loginUser(String userPengguna, String passPengguna) throws SQLException, ClassNotFoundException {
-    try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-         PreparedStatement stmt = conn.prepareStatement("SELECT user_pengguna, password_pengguna FROM customer WHERE user_pengguna = ? AND password_pengguna = ?")) {
-
-      stmt.setString(1, userPengguna);
-      stmt.setString(2, passPengguna);
-
-      try (ResultSet rs = stmt.executeQuery()) {
-        return rs.next();
-      }
-    }
-  }
-
-  public boolean checkUsername(String username) throws SQLException, ClassNotFoundException {
-    try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
-         PreparedStatement stmt = conn.prepareStatement("SELECT user_pengguna FROM customer WHERE BINARY user_pengguna = ?")) {
-
-      stmt.setString(1, username);
-
-      try (ResultSet rs = stmt.executeQuery()) {
-        return rs.next();
-      }
-    }
-  }
-}
-```
-
-6\. Run App.java inside a folder below.
+5\. Run App.java inside a folder below.
 
 ```\login-java\src\main\java\login\java\maven\App.java```
 
-7\. Done, you can try to create an account first.
 
 ###
 
