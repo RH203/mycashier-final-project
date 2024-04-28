@@ -31,8 +31,8 @@ Program ini dibuat menggunakan Java, Swing, dan MYSQL.
   </properties>
 ```
   3\. Setup database MySQL.
-      - Untuk setup database bisa dijalankan yang file yang berada di dalam main. ```db.sql```
-      - Setelah itu bisa jalankan file kedua ```menu.sql```
+  - Untuk setup database bisa dijalankan yang file yang berada di dalam main. ```db.sql```
+  - - Setelah itu bisa jalankan file kedua ```menu.sql```
       
       
 
